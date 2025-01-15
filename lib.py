@@ -46,10 +46,26 @@ def calcular_faturamento():
         return "Erro ao carregar os dados do faturamento."
 
     # Calcula os valores de maior, menor, média e dias acima da média
-    maior = max(faturamento_diario)
-    menor = min([x for x in faturamento_diario if x > 0])
-    media = sum(faturamento_diario) / len([x for x in faturamento_diario if x > 0])
-    dias_acima_da_media = len([x for x in faturamento_diario if x > media])
+    maior = faturamento_diario[0]
+    menor = float('inf')
+    soma = 0
+    dias_acima_da_media = 0
+    dias_validos = 0
+
+    for valor in faturamento_diario:
+        if valor > maior:
+            maior = valor
+        if valor > 0 and valor < menor:
+            menor = valor
+        if valor > 0:
+            soma += valor
+            dias_validos += 1
+
+    media = soma / dias_validos
+
+    for valor in faturamento_diario:
+        if valor > media:
+            dias_acima_da_media += 1
 
     # Exibindo os cálculos
     print(f"Média: {media}")
@@ -59,13 +75,22 @@ def calcular_faturamento():
             f"Menor faturamento: {menor}\n"
             f"Dias acima da média: {dias_acima_da_media}")
 
-
 def calcular_percentual():
     faturamento_estados = {"SP": 67836.43, "RJ": 36678.66, "MG": 29229.88, "ES": 27165.48, "Outros": 19849.53}
-    total = sum(faturamento_estados.values())
-    percentuais = {estado: (valor / total) * 100 for estado, valor in faturamento_estados.items()}
-    resultado = "\n".join([f"{estado}: {percentual:.2f}%" for estado, percentual in percentuais.items()])
-    return resultado
+    total = 0
+    for valor in faturamento_estados.values():
+        total += valor
+
+    percentuais = {}
+    for estado, valor in faturamento_estados.items():
+        percentuais[estado] = (valor / total) * 100
+
+    resultado = ""
+    for estado, percentual in percentuais.items():
+        resultado += f"{estado}: {percentual:.2f}%\n"
+
+    return resultado.strip()
+
 
 def inverter_string(texto):
     texto_invertido = texto[::-1]
