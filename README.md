@@ -63,9 +63,20 @@ faturamento = {
     'ES': 27165.48,
     'Outros': 19849.53
 }
-total = sum(faturamento.values())
-percentual = {estado: (valor / total) * 100 for estado, valor in faturamento.items()}
-print(percentual)
+total = 0
+for valor in faturamento.values():
+    total += valor
+
+percentuais = {}
+for estado, valor in faturamento.items():
+    percentuais[estado] = (valor / total) * 100
+
+resultado = ""
+for estado, percentual in percentuais.items():
+    resultado += f"{estado}: {percentual:.2f}%\n"
+
+return resultado.strip()
+
 ```
 
 ### 5) Inversão de String
