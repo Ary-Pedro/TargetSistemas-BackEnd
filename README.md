@@ -42,7 +42,7 @@ Dado um vetor com os valores de faturamento diário de uma distribuidora, calcul
 - O número de dias com faturamento superior à média mensal.
 
 **Entrada:** JSON ou XML com os dados de faturamento.
-
+Abaixo exemplos de entrada de dados
 ```json
 {
     "faturamento": [1500.00, 3200.00, 1800.00, 2200.00, 2900.00, 2500.00]
